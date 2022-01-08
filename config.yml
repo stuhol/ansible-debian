@@ -1,0 +1,14 @@
+---
+
+# Username to create
+username: "user"
+
+# Homename to set
+hostname: "hostname"
+
+# apt packages to install
+apt_packages:
+  - apt-transport-https
+  - coreutils
+  - pure-ftpd
+  - tor

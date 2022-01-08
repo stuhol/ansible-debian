@@ -1,0 +1,16 @@
+---
+- name: Get Microsoft package key
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+
+- name: Add Microsoft Edge repo
+  apt_repository:
+    repo: deb https://packages.microsoft.com/repos/edge stable main
+    filename: microsoft-edge-stable
+    state: present
+
+- name: Install Microsoft Edge
+  apt:
+    name: microsoft-edge-stable
+    update_cache: yes
+    state: latest

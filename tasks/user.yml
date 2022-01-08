@@ -1,0 +1,29 @@
+---
+- name: Check for user
+  command:
+    cmd: getent passwd "{{ username }}"
+  register: user_present
+  changed_when: false
+  ignore_errors: true
+
+- name: Create new user
+  block:
+    - name: Ask for user's password
+      pause:
+        prompt: Enter new user's password
+        echo: no
+      register: user_password
+
+    - name: Make hashed password
+      command:
+        cmd: mkpasswd --method=sha-512 "{{ user_password.user_input }}"
+      register: hashed_user_password
+
+    - name: Add user
+      user:
+        name: "{{ username }}"
+        groups: kali,cdrom,floppy,sudo,audio,dip,video,plugdev,netdev,bluetooth,lpadmin,scanner
+        append: yes 
+        password: "{{ hashed_user_password.stdout }}"
+        shell: /bin/bash
+  when: user_present is failed

@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  become: yes
+
+  vars_files:
+    - config.yml
+
+  tasks:
+    - import_tasks: tasks/hostname.yml
+      tags: ['hostname']
+
+    - import_tasks: tasks/user.yml
+      tags: ['user']
+
+    - import_tasks: tasks/edge.yml
+      tags: ['edge']
+
+    - import_tasks: tasks/visual-studio-code.yml
+      tags: ['vscode']
+
+    - import_tasks: tasks/packages.yml
+      tags: ['packages']
